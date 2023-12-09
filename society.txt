@@ -1,0 +1,144 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class house
+{
+private:
+	int houseNum;
+	int rooms;
+	int residents;
+	double area;
+public:
+	house(int hn = 0, int = 5, int = 5, double = 2722.51);
+	void print();
+	void setResidents(int);
+	void setHouse(int);
+	int getRooms();
+	int getResidents();
+	int getHouseNum();
+	double getArea();
+};
+house::house(int hn, int r, int R, double a)
+{
+	rooms = r; residents = R; area = a; houseNum = hn;
+}
+void house::setHouse(int hn)
+{
+	houseNum = hn;
+}
+int house::getHouseNum()
+{
+	return houseNum;
+}
+void house::print()
+{
+	cout << " House number: " << houseNum << endl;
+	cout << " Rooms:" << rooms << endl;
+	cout << " Residents: " << residents << endl;
+	cout << " Area in sq feet: " << area << endl;
+}
+void house::setResidents(int r)
+{
+	residents = r;
+}
+int house::getRooms()
+{
+	return rooms;
+}
+int house::getResidents()
+{
+	return residents;
+}
+double house::getArea()
+{
+	return area;
+}
+
+class society
+{
+private:
+	string name;
+	house* h;					//composition
+	int num;
+	int occ;
+public:
+	society(string = "DHA", int = 5, int = 0);
+	void print();
+	void setValues(string, int, int);
+	void setHouseValue(int, int);
+	string getName();
+	int getHouses();
+	int getOccupied();
+};
+string society::getName()
+{
+	return name;
+}
+int society::getHouses()
+{
+	return num;
+}
+int society::getOccupied()
+{
+	return occ;
+}
+void society::setHouseValue(int hn, int r)
+{
+	h[occ].setHouse(hn);
+	h[occ].setResidents(r);
+
+	occ++;
+}
+void society::setValues(string n, int N, int o)
+{
+	name = n; num = N; occ = o;
+	h = new house[num];
+}
+society::society(string n, int N, int o)
+{
+	name = n; num = N; occ = o;
+	h = new house[num];
+}
+void society::print()
+{
+	cout << " Name of society: " << name << endl;
+	cout << " Total number of houses: " << num << endl;
+	cout << " Number of houses occupied: " << occ << endl;
+
+	cout << " Printing details of houses occupied...\n\n";
+	for (int i = 0; i < occ; i++)
+	{
+		h[i].print();
+		cout << "_____________________________\n";
+	}
+}
+int main()
+{
+	string n;
+	int num, occupied;
+
+	cout << " Enter name of society: ";
+	getline(cin, n);
+	cout << " Enter total number of houses: ";
+	cin >> num;
+	cout << " Enter total number of houses with residences: ";
+	cin >> occupied;
+
+	int hn, r;
+	society s(n, num, 0);
+
+	cout << "\n Enter follwoing details..\n" << endl;
+	for (int i = 0; i < occupied; i++)
+	{
+		cout << " Enter number of residents for house " << i+1 << ": ";
+		cin >> r;
+
+		s.setHouseValue(i + 1, r);
+	}
+	system("cls");
+	s.print();
+
+
+	return 0;
+}

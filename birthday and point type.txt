@@ -1,0 +1,258 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Birthday
+{
+public:
+	Birthday(int cmonth = 1, int cday = 1, int cyear = 2000)
+	{
+		month = cmonth;
+		day = cday;
+		year = cyear;
+	}
+	Birthday(Birthday& b)
+	{
+		month = b.month;
+		day = b.day;
+		year = b.year;
+	}
+	void set(int m, int d, int y)
+	{
+		month = m; 
+		day = d; 
+		year = y;
+	}
+	void printDate() 
+	{ 
+		cout << month << "/" << day << "/" << year; 
+	}
+private:
+	int month;
+	int day;
+	int year;
+};
+class People
+{
+public:
+	People(string cname, int m , int d, int y)
+	{
+		name = cname;
+		dateOfBirth.set(m, d, y);
+	}
+	People(string n, Birthday& b) :dateOfBirth(b)
+	{
+		name = n;
+	}
+	void printInfo() 
+	{
+		cout << name << " was born on: ";
+		dateOfBirth.printDate();
+	}
+private:
+	string name;
+	Birthday dateOfBirth;
+};
+int main()
+{
+	//Birthday birthObject(7, 9, 97);
+	People infoObject("Lenny the Cowboy", 7, 9, 97);
+	infoObject.printInfo();
+
+	cout << "\n\n";
+
+	Birthday b(8, 14, 1947);
+	People P1("Pakistan", b);
+	P1.printInfo();
+
+
+	return 0;
+}
+
+
+-----------------------------------------------------------------------
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+class PointType
+{
+	int x;
+	int y;
+public:
+	PointType();
+	PointType(int, int);
+	void print();
+	int checkquad();
+	void setX(int);
+	void setY(int);
+	int getX();
+	int getY();
+	void set(int, int);
+};
+void PointType::setX(int X)
+{
+	x = X;
+}
+void PointType::setY(int Y)
+{
+	y = Y;
+}
+void PointType::set(int X, int Y)
+{
+	x = X; y = Y;
+}
+int PointType::getX()
+{
+	return x;
+}
+int PointType::getY()
+{
+	return y;
+}
+PointType::PointType()
+{
+	x = 0; y = 0;
+}
+PointType::PointType(int X, int Y)
+{
+	x = X; y = Y;
+}
+void PointType::print()
+{
+	cout << " ( " << x << " , " << y << " )" << endl;
+}
+int PointType::checkquad()
+{
+	if (x > 0 && y > 0)
+		return 1;
+	else if (x < 0 && y>0)
+		return 2;
+	else if (x < 0 && y < 0)
+		return 3;
+	else if (x > 0 && y < 0)
+		return 4;
+	else if (x == 0 && y == 0)
+		return 0;
+	else
+		return 5;
+}
+class CircleType
+{
+	double radius;
+	char* color;
+	PointType center;
+public:
+	CircleType(int , int , double , char*);
+	CircleType();
+	void print();
+	double calc_area();
+	double CC();;
+	void setparam(int, int, double, char*);
+	void setR(double r)
+	{
+		radius = r;
+	}
+	void setC(char* a)
+	{
+		color = a;
+	}
+	double getR()
+	{
+		return radius;
+	}
+	char* getC()
+	{
+		return color;
+	}
+};
+CircleType::CircleType(int x , int y , double r, char* c)
+{
+	center.set(x, y);
+	radius = r;
+	color = c;
+}
+CircleType::CircleType():center()
+{
+	radius = 1;
+	char c[10] = { "Blue" };
+	color = c;
+}
+void CircleType::setparam(int x, int y, double r, char* c)
+{
+	center.set(x, y);
+	radius = r;
+	color = c;
+}
+void CircleType::print()
+{
+	cout << " Radius: " << radius << endl;
+	cout << " Center: ";
+	center.print();
+	cout << " Color: " << color << endl;
+}
+double CircleType::calc_area()
+{
+	return (3.14 * radius * radius);
+}
+double CircleType::CC()
+{
+	return (2 * 3.14 * radius);
+}
+
+int main()
+{
+	char pq[10] = { "blue" };
+	CircleType C(21, 2, 3.5, pq);
+	cout << "\n************************\n" << endl;
+	C.print();
+	cout << "\n************************\n" << endl;
+	cout << " Area of circle is " << C.calc_area();
+	cout << "\n\n************************\n\n" << endl;
+
+	PointType P(-20, 3);
+	int p = P.checkquad();
+	P.print();
+	switch (p)
+	{
+	case 0:
+		cout << "Point lies at center" << endl;
+		break;
+	case 1:
+		cout << "Point lies in I quadrant" << endl;
+		break;
+	case 2:
+		cout << "Point lies in II quadrant" << endl;
+		break;
+	case 3:
+		cout << "Point lies in III quadrant" << endl;
+		break;
+	case 4:
+		cout << "Point lies in IV quadrant" << endl;
+		break;
+	default:
+		cout << "INVALID";
+		break;
+	}
+
+	int x;
+	int y;
+	double r;
+	char col[9], col1[10] = { "purple" };
+	CircleType circ(2, 5, 4.89, col1);
+	cout << "\n\n***********************\n\n";
+	circ.print();
+	cout << "\n Enter radius: ";
+	cin >> r;
+	cout << " Enter the coordinates where the center lies: ";
+	cin >> x >> y;
+	cout << " Enter color: ";
+	cin >> col;
+	circ.setparam(x, y, r, col);
+	cout << "\n\n***********************\n\n";
+	circ.print();
+	cout << "\n\n***********************\n\n";
+
+	return 0;
+}
